@@ -1,100 +1,47 @@
-"""
-=====================================================
-UNIT 5 DISCUSSION: SEARCH ALGORITHMS (LINEAR vs BINARY)
-=====================================================
-
-INSTRUCTIONS:
-In this assignment, you will implement and analyze two
-fundamental search algorithms: linear search and binary search.
-
-You will demonstrate your understanding by modifying the
-provided code, running experiments on different dataset sizes,
-and clearly explaining your results through code comments
-and program output.
-"""
+# Tamfor Dulin - CMSC 315 Unit 5 Discussion
+# Linear search vs. binary search on student scores
 
 
-def linear_search(lst, target):
-    """
-    TODO (Student):
-    Implement a linear search algorithm.
-
-    Requirements:
-    - Search the list from beginning to end.
-    - Return the index if the target is found.
-    - Return -1 if the target is not found.
-    - Add comments explaining why linear search
-      has O(n) time complexity.
-    """
-    pass
+def linear_search(scores, target):
+    for i in range(len(scores)):
+        if scores[i] == target:
+            return i
+    return -1
 
 
-def binary_search(lst, target):
-    """
-    TODO (Student):
-    Implement a binary search algorithm.
-
-    Requirements:
-    - Assume the list is already sorted.
-    - Repeatedly reduce the search space by half.
-    - Return the index if the target is found.
-    - Return -1 if the target is not found.
-    - Add comments explaining how each iteration
-      reduces the search space.
-    """
-    pass
+def binary_search(scores, target):
+    low = 0
+    high = len(scores) - 1
+    while low <= high:
+        mid = low + (high - low) // 2
+        if scores[mid] == target:
+            return mid
+        elif scores[mid] < target:
+            low = mid + 1
+        else:
+            high = mid - 1
+    return -1
 
 
-def main():
-    print("=== UNIT 5: SEARCH ALGORITHMS ===")
+scores = [55, 67, 72, 81, 90, 95]
 
-    # ===============================
-    # TODO (Student): SMALL DATASET
-    # ===============================
-    #
-    # Requirements:
-    # 1. Create a small sorted dataset.
-    # 2. Test both linear search and binary search.
-    # 3. Search for:
-    #    - a value that exists
-    #    - a value that does not exist
-    # 4. Use comments to clearly explain the results.
+# 81, which is found (index 3)
+print("Search for 81 (found):", linear_search(scores, 81), binary_search(scores, 81))
 
-    print("\n=== SMALL DATASET TEST ===")
-    print("TODO: Create a small dataset and test both searches.")
+# 100, which is missing (-1)
+print("Search for 100 (missing):", linear_search(scores, 100), binary_search(scores, 100))
 
-    # ===============================
-    # TODO (Student): LARGE DATASET
-    # ===============================
-    #
-    # Requirements:
-    # 1. Create a much larger sorted dataset.
-    # 2. Test both search algorithms.
-    # 3. Compare the results.
-    # 4. Use comments to explain why binary search becomes more
-    #    efficient as datasets grow larger.
+# An empty list [] (-1)
+print("Empty list []:", linear_search([], 81), binary_search([], 81))
 
-    print("\n=== LARGE DATASET TEST ===")
-    print("TODO: Create a larger dataset and compare results.")
+# A one-item list [50] (found at 0, missing at -1)
+print("One-item list [50] (found):", linear_search([50], 50), binary_search([50], 50))
+print("One-item list [50] (missing):", linear_search([50], 81), binary_search([50], 81))
 
-    # ===============================
-    # TODO (Student): EDGE CASES
-    # ===============================
-    #
-    # Demonstrate at least two edge cases.
-    #
-    # Example ideas:
-    # - Empty list
-    # - Single-element list
-    # - Value not present
-    # - Value at the first position
-    # - Value at the last position
-    #
-    # Explain what happens in each case.
+# 55 and 95, the first and last items (index 0 and index 5)
+print("First item 55:", linear_search(scores, 55), binary_search(scores, 55))
+print("Last item 95:", linear_search(scores, 95), binary_search(scores, 95))
 
-    print("\n=== EDGE CASE TESTS ===")
-    print("TODO: Demonstrate and explain edge cases.")
-
-
-if __name__ == "__main__":
-    main()
+# Large dataset: 100,000 sorted items, target is the last one (worst case for linear search)
+big = list(range(100000))
+print("Large list, search for 99999:", linear_search(big, 99999), binary_search(big, 99999))
